@@ -2,8 +2,6 @@ Tire Size Calculator App
 ========================
 
 Understand Your Wheels Like Never Before  
-Version: Latest  
-Download: https://play.google.com/store/apps/details?id=com.calculator.tiresizeconverter
 
 Overview
 --------
