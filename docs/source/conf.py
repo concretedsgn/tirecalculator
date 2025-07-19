@@ -2,9 +2,9 @@
 
 # -- Project information
 
-project = 'France Bus API'
-copyright = '2025, Bastien Charrier'
-author = 'Bastien Charrier'
+project = 'Tire Size Calculator App'
+copyright = '2025, James Anderson'
+author = 'James Anderson'
 
 release = '0.1'
 version = '0.1.0'
