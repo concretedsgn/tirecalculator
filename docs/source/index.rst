@@ -80,3 +80,15 @@ Additional Notes
 - Lightweight and works offline
 - No registration required
 - Built for enthusiasts and professionals alike
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Tire Comparison and Fitment Tools
+
+   features/tire-comparison-and-fitment-tools
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Quick Calculation Tools
+
+   features/quick-calculation-tools
