@@ -1,200 +1,84 @@
-SNCF Open Data API Documentation
-================================
+Tire Size Calculator App
+========================
 
-Version: v2.1  
-Base URL: https://ressources.data.sncf.com/api/explore/v2.1/catalog
+Understand Your Wheels Like Never Before  
+Version: Latest  
+Download: https://play.google.com/store/apps/details?id=com.calculator.tiresizeconverter
 
 Overview
 --------
-This API provides programmatic access to SNCF's open datasets. It allows you to query, filter, and export datasets via RESTful endpoints.
+**Tire Size Calculator Converter** is your smart companion for upgrading or replacing your car’s tires and wheels. Whether you're calculating fitment, correcting speedometer discrepancies, or comparing tire dimensions, this app ensures accuracy and clarity before making any change.
 
-Authentication
---------------
-No authentication is required for public access.
+Perfect for car enthusiasts, mechanics, and DIY upgraders, it empowers you to make well-informed decisions and avoid costly installation mistakes.
 
-Main Endpoints
-==============
+Features
+--------
 
-GET /datasets/{dataset_id}/records
------------------------------------
-Query dataset records.
+- **Tire Size Comparison**  
+  Instantly compare two tire sizes — original vs new — with side-by-side stats such as diameter, width, sidewall height, and circumference.
 
-**Path Parameters:**
+- **Speedometer Correction**  
+  Understand how a tire change affects your speedometer reading. Get exact values on speed difference at various driving speeds.
 
-- ``dataset_id`` *(string, required)*: Identifier of the dataset.
+- **Fitment & Clearance Estimator**  
+  Analyze how new tire/wheel combinations will affect clearance (inner and outer positions) and wheel well compatibility.
 
-**Query Parameters (optional):**
+- **Visual Difference Charts**  
+  Graphical illustrations help you visualize how different your new tires will be from the originals.
 
-- ``select``: Choose specific fields or compute expressions.
-- ``where``: Filter using Opendatasoft Query Language (ODSQL).
-- ``group_by``: Group results by a specific field or expression.
-- ``order_by``: Sort results (e.g., `order_by=name asc`).
-- ``limit`` *(integer)*: Max number of items to return (max 100 or 20,000 depending on grouping).
-- ``offset`` *(integer)*: Index of the first result (for pagination).
-- ``refine``: Filter using facet values (e.g., `refine=city:Paris`).
-- ``exclude``: Exclude specific facet values.
-- ``lang``: Language (default: "fr").
-- ``timezone``: Timezone for datetime fields (e.g., "UTC").
-- ``include_links`` *(boolean)*: Adds HATEOAS links if `true`.
-- ``include_app_metas`` *(boolean)*: Includes application metadata if `true`.
+- **Unit Conversion Support**  
+  Seamlessly switch between inches and millimeters for international compatibility.
 
-**Example Response:**
+- **Rim Size & Aspect Ratio Helper**  
+  Input tire size formats like "205/55 R16" or customize dimensions for advanced users.
 
-.. code-block:: json
+Use Cases
+---------
 
-   {
-     "total_count": 137611,
-     "results": [
-       {
-         "name": "Saint-Leu",
-         "coordinates": {
-           "lat": 46.7306,
-           "lon": 4.50083
-         },
-         "population": 29278,
-         ...
-       }
-     ]
-   }
+- Planning an upgrade to larger wheels or wider tires
+- Matching tire size after suspension modifications
+- Adjusting for aesthetic or off-road performance
+- Calculating exact speed changes due to tire size mismatch
+- Validating tire/wheel clearance in tight fender spaces
 
-GET /datasets/{dataset_id}/records/{record_id}
------------------------------------------------
-Fetch a single record from a dataset.
+Example Scenario
+----------------
 
-**Path Parameters:**
+**Before**: Your car uses 205/55 R16 tires.  
+**After**: You want to install 225/50 R17.
 
-- ``dataset_id`` *(string, required)*
-- ``record_id`` *(string, required)*
+.. code-block:: text
 
-**Query Parameters (optional):** Same as in `/records`.
+   • Diameter Difference: +1.9%
+   • Speedometer Difference: When you're going 100 km/h, real speed is ~101.9 km/h
+   • Sidewall Change: -3.1 mm
+   • Overall Height Gain: +12 mm
+   • Risk of Inner Wall Clearance Issue: Low
 
-GET /datasets/{dataset_id}/exports
------------------------------------
-List available export formats for a dataset.
+All of this is calculated instantly.
 
-**Path Parameters:**
+Why Use It?
+-----------
 
-- ``dataset_id`` *(string, required)*
+Upgrading wheels without understanding the consequences can lead to:
 
-GET /datasets/{dataset_id}/exports/{format}
--------------------------------------------
-Export a dataset in the specified format.
+- Speedometer errors
+- Premature tire wear
+- Fender rubbing
+- Failed vehicle inspections
 
-**Supported formats:**
+This app gives you confidence with instant, visual feedback and accurate numbers.
 
-- ``csv``, ``parquet``, ``gpx``, etc.
+App Download
+------------
 
-**Path Parameters:**
+Click the link to install on Android:
 
-- ``dataset_id`` *(string, required)*
-- ``format`` *(string, required)*
+`Google Play Store`: https://play.google.com/store/apps/details?id=com.calculator.tiresizeconverter
 
-**Query Parameters:**
+Additional Notes
+----------------
 
-- Same as in `/records`, plus:
-- ``use_labels`` *(boolean)*: Output field labels instead of field names.
-- ``compressed`` *(boolean)*: Export as compressed (e.g., `.csv.gz`).
-- ``epsg`` *(integer)*: EPSG projection code for geometric exports.
-
-**Response:** Downloadable file in specified format.
-
-GET /datasets/{dataset_id}/facets
-----------------------------------
-List values for each facet (for filtering/navigation).
-
-**Query Parameters:**
-
-- Same as in `/records`, plus:
-- ``facet``: Field or facet expression (e.g., `facet=name` or `facet=facet(name="city", sort="-count")`).
-
-**Example Response:**
-
-.. code-block:: json
-
-   {
-     "facets": [
-       {
-         "name": "timezone",
-         "facets": [
-           {
-             "name": "Europe",
-             "count": 68888
-           }
-         ]
-       }
-     ]
-   }
-
-GET /datasets/{dataset_id}/attachments
----------------------------------------
-List file attachments related to the dataset.
-
-**Path Parameters:**
-
-- ``dataset_id`` *(string, required)*
-
-GET /datasets/{dataset_id}/exports/csv
----------------------------------------
-Export a dataset in CSV format with extra CSV-specific parameters.
-
-**Additional CSV Parameters:**
-
-- ``delimit``: Field delimiter (e.g., `;`).
-- ``list_separator``: Separator for multivalue fields (e.g., `,`).
-- ``quote_all`` *(boolean)*: Quote all fields if `true`.
-- ``with_bom`` *(boolean)*: Add BOM for Excel compatibility (default `true` in v2.1).
-
-GET /datasets/{dataset_id}/exports/parquet
--------------------------------------------
-Export a dataset in Parquet format.
-
-**Additional Parquet Parameter:**
-
-- ``parquet_compression``: Compression type (e.g., `snappy`).
-
-GET /datasets/{dataset_id}/exports/gpx
----------------------------------------
-Export a dataset in GPX format (for geographic data).
-
-**Additional GPX Parameters:**
-
-- ``name_field``: Field to use as GPX `name`.
-- ``description_field_list``: Fields used for GPX `description`.
-- ``use_extension`` *(boolean)*: Use `<extension>` tag (default: `true` in v2.1).
-
-Response Codes
-==============
-
-- **200 OK**: Successful request.
-- **400 Bad Request**: Invalid ODSQL query or parameters.
-- **401 Unauthorized**: Authentication required.
-- **429 Too Many Requests**: Rate limit exceeded.
-- **500 Internal Server Error**: Server error.
-
-**Example Error Response:**
-
-.. code-block:: json
-
-   {
-     "message": "ODSQL query is malformed: invalid_function()",
-     "error_code": "ODSQLError"
-   }
-
-Additional References
-=====================
-
-- API Console: https://ressources.data.sncf.com/api/explore/v2.1/console
-- ODSQL Language Reference: https://docs.opendatasoft.com/en/data_exploration/04_analyzing_data/03_using_query_language.html
-- Horaires Bus: https://horairesbus.github.io/ — This community-driven website offers useful tools and examples for exploring French public transportation schedules. It can be a complementary resource when using the SNCF Open Data API.
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Fetch and Filter
-
-   practical-use/how-to-fetch-and-filter-real-time-train-station-data
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Exporting
-
-   practical-use/exporting-sncf-datasets-to-csv,-parquet,-and-gpx
+- Lightweight and works offline
+- No registration required
+- Built for enthusiasts and professionals alike
